@@ -46,8 +46,8 @@ export function About() {
                     <div className="absolute -inset-1 bg-gradient-to-r from-neon to-cyan rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
                     <div className="relative bg-space rounded-lg p-2 border border-white/10 overflow-hidden">
                         <img
-                            src="https://placehold.co/600x700/050505/FFFFFF?text=FOTO+BARU+ANDA"
-                            alt="Profile"
+                            src="/profile.jpg"
+                            alt="Muhammad Naufal Khaddafy"
                             className={`w-full h-auto rounded transition duration-500 ${isUnlocked ? '' : 'filter grayscale'
                                 } group-hover:grayscale-0`}
                         />

@@ -26,7 +26,9 @@ export function Contact() {
         }
 
         setIsGenerating(true);
-        const draft = await callGeminiAPI(`Draft formal email: ${idea}`, 'Plain text body only.');
+        const prompt = `Buat pesan singkat dan profesional untuk kolaborasi/request proyek web berdasarkan ide berikut: "${idea}". 
+        Format: Salam pembuka singkat, isi pesan langsung ke poin, penutup. Maksimal 3-4 kalimat. Jangan bertele-tele.`;
+        const draft = await callGeminiAPI(prompt, 'Tulis pesan singkat dan to-the-point dalam bahasa yang sama dengan input user. Tanpa subject email, langsung isi pesan saja.');
         setResult(draft);
         setShowResult(true);
         setIsGenerating(false);
@@ -89,10 +91,10 @@ export function Contact() {
                                 />
                                 <div className="flex gap-4 mt-4 justify-end">
                                     <a
-                                        href={`mailto:email@example.com?body=${encodeURIComponent(result)}`}
-                                        className="text-xs md:text-sm font-mono text-cyan hover:text-white hover:underline"
+                                        href={`mailto:naufalkhaddafy@gmail.com?subject=Kolaborasi%20dari%20Website&body=${encodeURIComponent(result)}`}
+                                        className="text-xs md:text-sm font-mono text-cyan hover:text-white cursor-pointer px-3 py-2 border border-cyan/50 rounded hover:bg-cyan/20 transition-all"
                                     >
-                                        [SEND_TRANSMISSION]
+                                        KIRIM EMAIL
                                     </a>
                                     <button
                                         onClick={copyToClipboard}

@@ -3,32 +3,83 @@ import { SectionBadge, ProjectCard } from './ui';
 import type { Language } from '../utils/i18n';
 import { getTranslation } from '../utils/i18n';
 
-const projectsData = [
+type ProjectCategory = 'all' | 'website' | 'automation';
+
+interface Project {
+    images: string[];
+    category: string;
+    categoryColor: 'neon' | 'cyan' | 'purple';
+    title?: string;
+    description?: string;
+    titleKey?: string;
+    descKey?: string;
+    link?: string;
+    tab: ProjectCategory;
+}
+
+const projectsData: Project[] = [
+    // Website Projects
     {
-        image: 'https://placehold.co/600x400/111/06b6d4?text=eCopy+Automation',
-        category: 'AUTOMATION',
-        categoryColor: 'neon' as const,
-        titleKey: 'p1-title',
-        descKey: 'p1-desc',
+        images: ['/projects/esign-1.png'],
+        category: 'SPFX REACT',
+        categoryColor: 'neon',
+        title: 'e-Sign Digital Signature',
+        description: 'Sistem tanda tangan digital berbasis SPFx React dengan workflow approval, multi-signature support, dan integrasi SharePoint.',
+        link: 'https://github.com/naufalkhaddafy',
+        tab: 'website',
     },
     {
-        image: 'https://placehold.co/600x400/111/6366f1?text=SPFx+Web+Parts',
+        images: ['https://placehold.co/600x400/111/6366f1?text=SPFx+Web+Parts'],
         category: 'SHAREPOINT',
-        categoryColor: 'cyan' as const,
+        categoryColor: 'purple',
         titleKey: 'p2-title',
         descKey: 'p2-desc',
+        tab: 'website',
     },
     {
-        image: 'https://placehold.co/600x400/111/a855f7?text=n8n+Workflow',
-        category: 'WORKFLOW',
-        categoryColor: 'purple' as const,
-        title: 'n8n Automation Workflow',
-        description: 'Automated business processes using n8n and Power Automate integration.',
+        images: ['https://placehold.co/600x400/111/a855f7?text=Portfolio+Website'],
+        category: 'ASTRO REACT',
+        categoryColor: 'cyan',
+        title: 'Portfolio Website',
+        description: 'Personal portfolio website built with Astro and React, featuring Three.js background and GSAP animations.',
+        tab: 'website',
     },
+    // Automation Projects
+    {
+        images: ['https://placehold.co/600x400/111/06b6d4?text=eCopy+Automation'],
+        category: 'AUTOMATION',
+        categoryColor: 'cyan',
+        titleKey: 'p1-title',
+        descKey: 'p1-desc',
+        tab: 'automation',
+    },
+    {
+        images: ['https://placehold.co/600x400/111/a855f7?text=n8n+Workflow'],
+        category: 'N8N',
+        categoryColor: 'purple',
+        title: 'n8n Automation Workflow',
+        description: 'Automated business processes using n8n for document processing and notification systems.',
+        tab: 'automation',
+    },
+    {
+        images: ['https://placehold.co/600x400/111/6366f1?text=Power+Automate'],
+        category: 'POWER AUTOMATE',
+        categoryColor: 'neon',
+        title: 'Power Automate Flows',
+        description: 'Microsoft Power Automate workflows for SharePoint document approval and email automation.',
+        tab: 'automation',
+    },
+];
+
+const tabs = [
+    { id: 'all' as ProjectCategory, label: 'ALL' },
+    { id: 'website' as ProjectCategory, label: 'WEBSITE' },
+    { id: 'automation' as ProjectCategory, label: 'AUTOMATION' },
 ];
 
 export function Projects() {
     const [currentLang, setCurrentLang] = useState<Language>('id');
+    const [activeTab, setActiveTab] = useState<ProjectCategory>('all');
 
     useEffect(() => {
         const handleLangChange = (e: CustomEvent<Language>) => {
@@ -38,10 +89,14 @@ export function Projects() {
         return () => window.removeEventListener('langchange', handleLangChange as EventListener);
     }, []);
 
+    const filteredProjects = activeTab === 'all'
+        ? projectsData
+        : projectsData.filter(p => p.tab === activeTab);
+
     return (
         <section id="projects" className="py-20 md:py-32 relative px-6 bg-space/50">
             <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-20 gs-reveal-up">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-8 md:mb-12 gs-reveal-up">
                     <div className="w-full">
                         <SectionBadge number="04" label="SELECTED_WORKS" color="cyan" />
                         <h2 className="text-3xl md:text-6xl font-display font-bold">
@@ -51,15 +106,39 @@ export function Projects() {
                     <div className="hidden md:block w-32 h-[2px] bg-white/20"></div>
                 </div>
 
+                {/* Tab Navigation */}
+                <div className="flex gap-2 md:gap-4 mb-8 md:mb-12 overflow-x-auto pb-2">
+                    {tabs.map((tab) => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`px-4 py-2 md:px-6 md:py-3 font-mono text-xs md:text-sm tracking-wider rounded-lg transition-all duration-300 whitespace-nowrap ${activeTab === tab.id
+                                ? 'bg-cyan text-black font-bold'
+                                : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
+                                }`}
+                        >
+                            {tab.label}
+                            <span className="ml-2 text-[10px] opacity-60">
+                                ({tab.id === 'all' ? projectsData.length : projectsData.filter(p => p.tab === tab.id).length})
+                            </span>
+                        </button>
+                    ))}
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                    {projectsData.map((project, index) => (
-                        <div key={index} className="gs-reveal-up" style={{ animationDelay: `${index * 100}ms` }}>
+                    {filteredProjects.map((project, index) => (
+                        <div
+                            key={`${project.title || project.titleKey}-${index}`}
+                            className="gs-reveal-up"
+                            style={{ animationDelay: `${index * 100}ms` }}
+                        >
                             <ProjectCard
-                                image={project.image}
+                                images={project.images}
                                 category={project.category}
                                 categoryColor={project.categoryColor}
                                 title={project.titleKey ? getTranslation(currentLang, project.titleKey) : project.title!}
                                 description={project.descKey ? getTranslation(currentLang, project.descKey) : project.description!}
+                                link={project.link}
                             />
                         </div>
                     ))}

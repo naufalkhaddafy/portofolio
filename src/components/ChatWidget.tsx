@@ -31,7 +31,20 @@ export function ChatWidget() {
         setMessages((prev) => [...prev, { text: userMessage, sender: 'user' }]);
         setIsLoading(true);
 
-        const context = 'You are a futuristic AI assistant. Keep answers short, technical, and cool.';
+        const context = `You are an AI assistant for Muhammad Naufal Khaddafy's portfolio website (CODEPAI). 
+        
+About Naufal:
+- Software Engineer passionate about AI-assisted development
+- Bachelor's degree in Informatics from University of Muhammadiyah Malang
+- Currently working at PT. Berca Hardaya Perkasa as IT Support & Data Center Operations (Project at PT Kaltim Prima Coal)
+- Previous experience: System Engineer at PT. Permata Indonesia (Astragraphia), Freelance Web Developer, Fullstack Developer Intern at PT. Meta Mata Indonesia
+
+Skills:
+- Frontend: React, JavaScript, HTML5, CSS3, Tailwind, Bootstrap, Vite, SCSS
+- Backend: Node.js, PHP, Laravel, MySQL, MongoDB, Git, Ubuntu, Nginx
+- Automation: n8n, Power Automate, Power BI, SPFx, SharePoint, Active Directory, Microsoft 365, Veeam
+
+Respond in a friendly, professional manner. Keep answers concise and helpful. If asked about hiring or contact, suggest using the contact form or email at naufalkhaddafy@gmail.com. Answer in the same language as the user's question.`;
         const response = await callGeminiAPI(userMessage, context);
 
         setMessages((prev) => [...prev, { text: response, sender: 'ai' }]);
@@ -39,10 +52,10 @@ export function ChatWidget() {
     };
 
     return (
-        <div className="fixed bottom-4 left-4 md:bottom-8 md:left-8 z-50 flex flex-col items-start pointer-events-none">
+        <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex flex-col items-end pointer-events-none">
             {/* Chat Window */}
             <div
-                className={`holo-card w-[calc(100vw-2rem)] md:w-80 h-[400px] md:h-[450px] rounded-lg mb-4 transition-all duration-300 origin-bottom-left pointer-events-auto flex flex-col overflow-hidden border-neon/30 bg-black/80 backdrop-blur-xl ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-10 hidden'
+                className={`holo-card w-[calc(100vw-2rem)] md:w-80 h-[400px] md:h-[450px] rounded-lg mb-4 transition-all duration-300 origin-bottom-right pointer-events-auto flex flex-col overflow-hidden border-neon/30 bg-black/80 backdrop-blur-xl ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-10 hidden'
                     }`}
             >
                 {/* Header */}

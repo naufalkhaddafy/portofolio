@@ -25,9 +25,9 @@ export const translations: Record<Language, TranslationMap> = {
         'p1-desc': 'Sistem scanning dokumen otomatis untuk workflow perusahaan.',
         'p2-title': 'SPFx Web Parts',
         'p2-desc': 'Pengembangan web parts SharePoint dengan SPFx Framework.',
-        'contact-title': 'HUBUNGI SAYA',
-        'contact-desc': 'Gunakan AI untuk membuat draft pesan kepada saya.',
-        'btn-generate-text': 'BUAT DRAFT AI',
+        'contact-title': 'MARI BERKOLABORASI',
+        'contact-desc': 'Punya ide proyek web atau ingin berkolaborasi? Kirim pesan dan mari wujudkan bersama!',
+        'btn-generate-text': 'KIRIM PESAN',
     },
     en: {
         'nav-home': 'HOME',
@@ -48,9 +48,9 @@ export const translations: Record<Language, TranslationMap> = {
         'p1-desc': 'Automated document scanning system for enterprise workflow.',
         'p2-title': 'SPFx Web Parts',
         'p2-desc': 'SharePoint web parts development with SPFx Framework.',
-        'contact-title': 'GET IN TOUCH',
-        'contact-desc': 'Use AI to draft a message to me.',
-        'btn-generate-text': 'GENERATE AI DRAFT',
+        'contact-title': "LET'S COLLABORATE",
+        'contact-desc': 'Have a web project idea or want to collaborate? Send a message and let\'s make it happen!',
+        'btn-generate-text': 'SEND MESSAGE',
     },
 };
 

@@ -1,5 +1,5 @@
 // Gemini API integration
-const API_KEY = ''; // Add your API key
+const API_KEY = 'AIzaSyDe1sHM3Rw2np0C3x6BB7lwyI9xQ2DPr88';
 
 export async function callGeminiAPI(
     prompt: string,
