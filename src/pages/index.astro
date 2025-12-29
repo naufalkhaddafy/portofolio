@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  Navbar,
+  Hero,
+  About,
+  Skills,
+  Experience,
+  Projects,
+  Contact,
+  Footer,
+  ChatWidget,
+  RocketButton,
+  BackgroundCanvas,
+  CustomCursor,
+  GSAPAnimations,
+} from '../components';
+---
+
+<BaseLayout title="Codepai Portfolio">
+  <!-- Client-side components -->
+  <CustomCursor client:load />
+  <BackgroundCanvas client:load />
+  <GSAPAnimations client:load />
+
+  <!-- Navbar -->
+  <Navbar client:load />
+
+  <!-- Main Content -->
+  <main>
+    <Hero client:load />
+    <About client:load />
+    <Skills client:load />
+    <Experience client:load />
+    <Projects client:load />
+    <Contact client:load />
+  </main>
+
+  <!-- Footer -->
+  <Footer />
+
+  <!-- Floating Elements -->
+  <RocketButton client:load />
+  <ChatWidget client:load />
+</BaseLayout>
