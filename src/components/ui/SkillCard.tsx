@@ -7,9 +7,16 @@ interface SkillIconProps {
 }
 
 export function SkillIcon({ icon, label, delay = 1 }: SkillIconProps) {
+    const isImageIcon = icon.startsWith('img:');
+    const imageSrc = isImageIcon ? icon.replace('img:', '') : '';
+
     return (
         <div className={`skill-item delay-${delay}`}>
-            <i className={icon}></i>
+            {isImageIcon ? (
+                <img src={imageSrc} alt={label} className="skill-img-icon" />
+            ) : (
+                <i className={icon}></i>
+            )}
             <span>{label}</span>
         </div>
     );
