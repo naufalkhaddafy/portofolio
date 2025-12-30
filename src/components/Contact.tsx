@@ -4,12 +4,29 @@ import type { Language } from '../utils/i18n';
 import { getTranslation } from '../utils/i18n';
 import { callGeminiAPI } from '../utils/gemini';
 
+// Toast notification type
+interface Toast {
+    id: number;
+    message: string;
+    type: 'success' | 'error' | 'info';
+}
+
 export function Contact() {
     const [currentLang, setCurrentLang] = useState<Language>('id');
     const [idea, setIdea] = useState('');
     const [result, setResult] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
     const [showResult, setShowResult] = useState(false);
+    const [toasts, setToasts] = useState<Toast[]>([]);
+
+    // Show toast notification
+    const showToast = (message: string, type: 'success' | 'error' | 'info') => {
+        const id = Date.now();
+        setToasts(prev => [...prev, { id, message, type }]);
+        setTimeout(() => {
+            setToasts(prev => prev.filter(t => t.id !== id));
+        }, 3000);
+    };
 
     useEffect(() => {
         const handleLangChange = (e: CustomEvent<Language>) => {
@@ -21,7 +38,7 @@ export function Contact() {
 
     const generateEmailDraft = async () => {
         if (!idea.trim()) {
-            alert('INPUT REQUIRED.');
+            showToast('⚠️ INPUT REQUIRED - Please enter your message idea', 'error');
             return;
         }
 
@@ -32,96 +49,120 @@ export function Contact() {
         setResult(draft);
         setShowResult(true);
         setIsGenerating(false);
+        showToast('✓ MESSAGE GENERATED SUCCESSFULLY', 'success');
     };
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(result);
-        alert('COPIED');
+        showToast('📋 COPIED TO CLIPBOARD', 'success');
     };
 
     return (
-        <section id="contact" className="py-20 md:py-32 relative px-6">
-            <div className="max-w-4xl mx-auto text-center relative z-10">
-                <div className="gs-reveal-scale">
-                    <h2 className="text-3xl md:text-5xl lg:text-8xl font-display font-bold mb-6 md:mb-8">
-                        {getTranslation(currentLang, 'contact-title')}
-                    </h2>
-                    <p className="text-base md:text-xl text-gray-400 mb-8 md:mb-12 max-w-2xl mx-auto px-4">
-                        {getTranslation(currentLang, 'contact-desc')}
-                    </p>
-                </div>
+        <>
+            {/* Toast Notifications */}
+            <div className="fixed top-24 right-4 md:right-8 z-[100] flex flex-col gap-3 pointer-events-none">
+                {toasts.map((toast) => (
+                    <div
+                        key={toast.id}
+                        className={`
+                            pointer-events-auto px-4 py-3 rounded-lg backdrop-blur-xl border shadow-lg
+                            animate-[slideIn_0.3s_ease-out] font-mono text-xs md:text-sm tracking-wide
+                            ${toast.type === 'error'
+                                ? 'bg-red-500/20 border-red-500/50 text-red-400 shadow-red-500/20'
+                                : toast.type === 'success'
+                                    ? 'bg-green-500/20 border-green-500/50 text-green-400 shadow-green-500/20'
+                                    : 'bg-cyan/20 border-cyan/50 text-cyan shadow-cyan/20'
+                            }
+                        `}
+                    >
+                        {toast.message}
+                    </div>
+                ))}
+            </div>
 
-                <div className="gs-reveal-up holo-card p-1 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 inline-block w-full text-left relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan to-transparent opacity-50 animate-[scan_3s_linear_infinite]"></div>
-                    <div className="bg-[#050505] p-6 md:p-8 rounded-xl">
-                        <label className="font-mono text-neon text-[10px] md:text-xs mb-2 block tracking-widest">
-                            [INPUT_MESSAGE_PARAMETERS]
-                        </label>
-                        <textarea
-                            value={idea}
-                            onChange={(e) => setIdea(e.target.value)}
-                            rows={3}
-                            className="w-full bg-space border border-white/20 rounded p-4 text-white focus:border-cyan focus:outline-none focus:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all font-mono text-sm"
-                            placeholder="> Input command here..."
-                        />
+            <section id="contact" className="py-20 md:py-32 relative px-6">
+                <div className="max-w-4xl mx-auto text-center relative z-10">
+                    <div className="gs-reveal-scale">
+                        <h2 className="text-3xl md:text-5xl lg:text-8xl font-display font-bold mb-6 md:mb-8">
+                            {getTranslation(currentLang, 'contact-title')}
+                        </h2>
+                        <p className="text-base md:text-xl text-gray-400 mb-8 md:mb-12 max-w-2xl mx-auto px-4">
+                            {getTranslation(currentLang, 'contact-desc')}
+                        </p>
+                    </div>
 
-                        <div className="mt-4">
-                            <button
-                                onClick={generateEmailDraft}
-                                disabled={isGenerating}
-                                className="w-full bg-white text-black font-bold py-3 md:py-4 hover:bg-cyan hover:text-white transition-all duration-300 font-display text-xs md:text-sm tracking-widest uppercase relative overflow-hidden group disabled:opacity-50"
-                            >
-                                <span className="relative z-10">
-                                    {isGenerating ? 'COMPUTING...' : getTranslation(currentLang, 'btn-generate-text')}
-                                </span>
-                            </button>
-                        </div>
+                    <div className="gs-reveal-up holo-card p-1 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 inline-block w-full text-left relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan to-transparent opacity-50 animate-[scan_3s_linear_infinite]"></div>
+                        <div className="bg-[#050505] p-6 md:p-8 rounded-xl">
+                            <label className="font-mono text-neon text-[10px] md:text-xs mb-2 block tracking-widest">
+                                [INPUT_MESSAGE_PARAMETERS]
+                            </label>
+                            <textarea
+                                value={idea}
+                                onChange={(e) => setIdea(e.target.value)}
+                                rows={3}
+                                className="w-full bg-space border border-white/20 rounded p-4 text-white focus:border-cyan focus:outline-none focus:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all font-mono text-sm"
+                                placeholder="> Input command here..."
+                            />
 
-                        {/* Result Console */}
-                        {showResult && (
-                            <div className="mt-6 border-t border-white/10 pt-6">
-                                <label className="font-mono text-green-400 text-[10px] md:text-xs mb-2 block tracking-widest">
-                                    [OUTPUT_GENERATED]
-                                </label>
-                                <textarea
-                                    value={result}
-                                    readOnly
-                                    rows={6}
-                                    className="w-full bg-space/50 border-l-2 border-green-500 p-4 text-gray-300 font-mono text-xs md:text-sm focus:outline-none"
-                                />
-                                <div className="flex gap-4 mt-4 justify-end">
-                                    <a
-                                        href={`mailto:naufalkhaddafy@gmail.com?subject=Kolaborasi%20dari%20Website&body=${encodeURIComponent(result)}`}
-                                        className="text-xs md:text-sm font-mono text-cyan hover:text-white cursor-pointer px-3 py-2 border border-cyan/50 rounded hover:bg-cyan/20 transition-all"
-                                    >
-                                        KIRIM EMAIL
-                                    </a>
-                                    <button
-                                        onClick={copyToClipboard}
-                                        className="text-xs md:text-sm font-mono text-gray-500 hover:text-white"
-                                    >
-                                        [COPY_DATA]
-                                    </button>
-                                </div>
+                            <div className="mt-4">
+                                <button
+                                    onClick={generateEmailDraft}
+                                    disabled={isGenerating}
+                                    className="w-full bg-white text-black font-bold py-3 md:py-4 hover:bg-cyan hover:text-white transition-all duration-300 font-display text-xs md:text-sm tracking-widest uppercase relative overflow-hidden group disabled:opacity-50"
+                                >
+                                    <span className="relative z-10">
+                                        {isGenerating ? 'COMPUTING...' : getTranslation(currentLang, 'btn-generate-text')}
+                                    </span>
+                                </button>
                             </div>
-                        )}
+
+                            {/* Result Console */}
+                            {showResult && (
+                                <div className="mt-6 border-t border-white/10 pt-6">
+                                    <label className="font-mono text-green-400 text-[10px] md:text-xs mb-2 block tracking-widest">
+                                        [OUTPUT_GENERATED]
+                                    </label>
+                                    <textarea
+                                        value={result}
+                                        readOnly
+                                        rows={6}
+                                        className="w-full bg-space/50 border-l-2 border-green-500 p-4 text-gray-300 font-mono text-xs md:text-sm focus:outline-none"
+                                    />
+                                    <div className="flex gap-4 mt-4 justify-end">
+                                        <a
+                                            href={`mailto:naufalkhaddafy@gmail.com?subject=Kolaborasi%20dari%20Website&body=${encodeURIComponent(result)}`}
+                                            className="text-xs md:text-sm font-mono text-cyan hover:text-white cursor-pointer px-3 py-2 border border-cyan/50 rounded hover:bg-cyan/20 transition-all"
+                                        >
+                                            KIRIM EMAIL
+                                        </a>
+                                        <button
+                                            onClick={copyToClipboard}
+                                            className="text-xs md:text-sm font-mono text-gray-500 hover:text-white"
+                                        >
+                                            [COPY_DATA]
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Social Links */}
+                    <div className="mt-16 md:mt-20 flex justify-center gap-8 text-2xl md:text-3xl">
+                        <a href="https://github.com/naufalkhaddafy" className="hover:text-cyan hover:scale-125 transition-all">
+                            <i className="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/naufalkhaddafy" className="hover:text-neon hover:scale-125 transition-all">
+                            <i className="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://instagram.com/naufalkhaddafy" className="hover:text-pink-500 hover:scale-125 transition-all">
+                            <i className="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
-
-                {/* Social Links */}
-                <div className="mt-16 md:mt-20 flex justify-center gap-8 text-2xl md:text-3xl">
-                    <a href="https://github.com/naufalkhaddafy" className="hover:text-cyan hover:scale-125 transition-all">
-                        <i className="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/naufalkhaddafy" className="hover:text-neon hover:scale-125 transition-all">
-                        <i className="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://instagram.com/naufalkhaddafy" className="hover:text-pink-500 hover:scale-125 transition-all">
-                        <i className="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 }
 
