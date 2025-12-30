@@ -192,7 +192,7 @@ export function Hero({ onChatToggle }: HeroProps) {
                     <Button as="a" href="#projects" variant="primary" magnetic>
                         {getTranslation(currentLang, 'hero-btn-works')}
                     </Button>
-                    <Button variant="outline" onClick={onChatToggle}>
+                    <Button variant="outline" onClick={() => window.dispatchEvent(new CustomEvent('openChat'))}>
                         <i className="fas fa-robot mr-2"></i>
                         {getTranslation(currentLang, 'hero-btn-ai')}
                     </Button>

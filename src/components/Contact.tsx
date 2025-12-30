@@ -110,13 +110,13 @@ export function Contact() {
 
                 {/* Social Links */}
                 <div className="mt-16 md:mt-20 flex justify-center gap-8 text-2xl md:text-3xl">
-                    <a href="#" className="hover:text-cyan hover:scale-125 transition-all">
+                    <a href="https://github.com/naufalkhaddafy" className="hover:text-cyan hover:scale-125 transition-all">
                         <i className="fab fa-github"></i>
                     </a>
-                    <a href="#" className="hover:text-neon hover:scale-125 transition-all">
+                    <a href="https://linkedin.com/in/naufalkhaddafy" className="hover:text-neon hover:scale-125 transition-all">
                         <i className="fab fa-linkedin"></i>
                     </a>
-                    <a href="#" className="hover:text-pink-500 hover:scale-125 transition-all">
+                    <a href="https://instagram.com/naufalkhaddafy" className="hover:text-pink-500 hover:scale-125 transition-all">
                         <i className="fab fa-instagram"></i>
                     </a>
                 </div>

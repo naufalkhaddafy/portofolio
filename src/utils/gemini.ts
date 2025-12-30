@@ -1,5 +1,6 @@
-// Gemini API integration
-const API_KEY = 'AIzaSyDe1sHM3Rw2np0C3x6BB7lwyI9xQ2DPr88';
+/// <reference types="astro/client" />
+// Gemini API integration - API key loaded from environment variable
+const API_KEY = import.meta.env.PUBLIC_GEMINI_API_KEY;
 
 export async function callGeminiAPI(
     prompt: string,
@@ -24,9 +25,16 @@ export async function callGeminiAPI(
             body: JSON.stringify(payload),
         });
         const data = await response.json();
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || 'AI OFFLINE.';
+
+        // Check for API errors
+        if (data.error) {
+            console.error('Gemini API Error:', data.error);
+            return `API ERROR: ${data.error.message || 'Unknown error'}`;
+        }
+
+        return data.candidates?.[0]?.content?.parts?.[0]?.text || 'AI OFFLINE - No response.';
     } catch (error) {
-        console.error(error);
-        return 'CONNECTION ERROR.';
+        console.error('Connection Error:', error);
+        return 'CONNECTION ERROR - Check network.';
     }
 }
