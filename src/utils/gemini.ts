@@ -11,7 +11,7 @@ export async function callGeminiAPI(
         return 'ERROR: API KEY MISSING.';
     }
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
     const payload = {
         contents: [{ parts: [{ text: prompt }] }],

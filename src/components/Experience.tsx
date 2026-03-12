@@ -1,58 +1,84 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionBadge, TimelineItem } from './ui';
+import type { Language } from '../utils/i18n';
+import { getTranslation } from '../utils/i18n';
 
-const experienceData = [
+interface ExperienceItem {
+    titleKey: string;
+    periodKey: string;
+    companyKey: string;
+    descKey: string;
+    color: 'neon' | 'cyan' | 'purple';
+    isActive: boolean;
+}
+
+const experienceData: ExperienceItem[] = [
     {
-        title: 'IT Support & Data Center Operations',
-        period: 'SEP 2024 - PRESENT',
-        company: 'PT. BERCA HARDAYA PERKASA • Project at PT Kaltim Prima Coal',
-        description:
-            'Started as Desktop Support Engineer handling hardware/software troubleshooting. Currently managing Data Center Operations including Active Directory, Microsoft 365, Veeam backup, and infrastructure monitoring.',
-        color: 'neon' as const,
+        titleKey: 'exp-1-title',
+        periodKey: 'exp-1-period',
+        companyKey: 'exp-1-company',
+        descKey: 'exp-1-desc',
+        color: 'neon',
         isActive: true,
     },
     {
-        title: 'System Engineer',
-        period: 'MAY 2024 - SEP 2024',
-        company: 'PT. PERMATA INDONESIA (ASTRAGRAPHIA) • Project at PT Kaltim Prima Coal',
-        description:
-            'Configuring eCopy system for document scanning automation workflow. Managing SharePoint document management. Creating automation using n8n and Power Automate. Developing SPFx web parts.',
-        color: 'cyan' as const,
+        titleKey: 'exp-2-title',
+        periodKey: 'exp-2-period',
+        companyKey: 'exp-2-company',
+        descKey: 'exp-2-desc',
+        color: 'cyan',
         isActive: false,
     },
     {
-        title: 'Freelance Web Developer',
-        period: 'APR 2024 - MAY 2024',
-        company: 'EAST KUTAI, INDONESIA',
-        description:
-            'Engaged with clients to gather requirements and deliver solutions. Created interactive and responsive web applications with databases and server infrastructure.',
-        color: 'purple' as const,
+        titleKey: 'exp-3-title',
+        periodKey: 'exp-3-period',
+        companyKey: 'exp-3-company',
+        descKey: 'exp-3-desc',
+        color: 'purple',
         isActive: false,
     },
     {
-        title: 'Fullstack Developer Intern',
-        period: 'JUL 2023 - OCT 2023',
-        company: 'PT. META MATA INDONESIA',
-        description:
-            'Slicing UI/UX designs to responsive web pages. Developed features using Laravel and MySQL. Performed feature testing for smooth operation.',
-        color: 'cyan' as const,
+        titleKey: 'exp-4-title',
+        periodKey: 'exp-4-period',
+        companyKey: 'exp-4-company',
+        descKey: 'exp-4-desc',
+        color: 'cyan',
         isActive: false,
     },
 ];
 
 export function Experience() {
+    const [currentLang, setCurrentLang] = useState<Language>('id');
+
+    useEffect(() => {
+        const handleLangChange = (e: CustomEvent<Language>) => {
+            setCurrentLang(e.detail);
+        };
+        window.addEventListener('langchange', handleLangChange as EventListener);
+        return () => window.removeEventListener('langchange', handleLangChange as EventListener);
+    }, []);
+
     return (
         <section id="experience" className="py-20 md:py-24 relative px-6">
             <div className="max-w-4xl mx-auto">
                 <div className="mb-12 md:mb-16 text-left md:text-right gs-reveal-up">
                     <SectionBadge number="03" label="MISSION_LOGS" color="purple" />
-                    <h2 className="text-3xl md:text-5xl font-display font-bold">EXPERIENCE</h2>
+                    <h2 className="text-3xl md:text-5xl font-display font-bold">
+                        {getTranslation(currentLang, 'experience-title')}
+                    </h2>
                 </div>
 
                 <div className="relative timeline-line pl-6 md:pl-8 space-y-12">
                     {experienceData.map((exp, index) => (
                         <div key={index} className="gs-reveal-up" style={{ animationDelay: `${index * 100}ms` }}>
-                            <TimelineItem {...exp} />
+                            <TimelineItem 
+                                title={getTranslation(currentLang, exp.titleKey)}
+                                period={getTranslation(currentLang, exp.periodKey)}
+                                company={getTranslation(currentLang, exp.companyKey)}
+                                description={getTranslation(currentLang, exp.descKey)}
+                                color={exp.color}
+                                isActive={exp.isActive}
+                            />
                         </div>
                     ))}
                 </div>
