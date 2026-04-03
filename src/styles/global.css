@@ -325,13 +325,12 @@ body {
 .skill-item span {
   font-size: 0.65rem;
   font-family: 'Space Grotesk', monospace;
-  opacity: 0;
-  transform: translateY(10px);
+  opacity: 0.8;
+  transform: translateY(0);
   transition: all 0.3s ease;
   color: #fff;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 2px 6px;
-  border-radius: 4px;
+  background: transparent;
+  text-align: center;
   pointer-events: none;
 }
 
@@ -434,7 +433,7 @@ body {
 
 .skill-item:hover span {
   opacity: 1;
-  transform: translateY(0);
+  transform: scale(1.05);
 }
 
 @keyframes float-icon {

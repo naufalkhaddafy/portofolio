@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
 import { Button } from './ui';
 import type { Language } from '../utils/i18n';
 import { getTranslation } from '../utils/i18n';
@@ -70,7 +69,6 @@ interface HeroProps {
 
 export function Hero({ onChatToggle }: HeroProps) {
     const [currentLang, setCurrentLang] = useState<Language>('id');
-    const containerRef = useRef<HTMLDivElement>(null);
     const scramble1Ref = useRef<HTMLSpanElement>(null);
     const scramble2Ref = useRef<HTMLSpanElement>(null);
     const fx1Ref = useRef<TextScramble | null>(null);
@@ -94,43 +92,7 @@ export function Hero({ onChatToggle }: HeroProps) {
         }
     }, []);
 
-    // Hero 3D Tilt Effect
-    useEffect(() => {
-        const container = containerRef.current;
-        if (!container) return;
 
-        const handleMouseMove = (e: MouseEvent) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 2;
-            const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-            gsap.to(container, {
-                duration: 0.5,
-                rotationY: x * 5,
-                rotationX: -y * 5,
-                x: -x * 20,
-                y: -y * 20,
-                ease: 'power2.out',
-                transformPerspective: 1000,
-            });
-        };
-
-        const handleMouseLeave = () => {
-            gsap.to(container, { duration: 1, rotationY: 0, rotationX: 0, x: 0, y: 0, ease: 'power2.out' });
-        };
-
-        const section = document.getElementById('home');
-        if (section) {
-            section.addEventListener('mousemove', handleMouseMove);
-            section.addEventListener('mouseleave', handleMouseLeave);
-        }
-
-        return () => {
-            if (section) {
-                section.removeEventListener('mousemove', handleMouseMove);
-                section.removeEventListener('mouseleave', handleMouseLeave);
-            }
-        };
-    }, []);
 
     const handleScramble = (ref: React.RefObject<HTMLSpanElement>, fxRef: React.RefObject<TextScramble | null>) => {
         if (ref.current && fxRef.current) {
@@ -147,12 +109,9 @@ export function Hero({ onChatToggle }: HeroProps) {
         <section
             id="home"
             className="min-h-screen flex items-center justify-center relative px-6 pt-24 md:pt-0"
-            style={{ perspective: '1000px' }}
         >
             <div
-                ref={containerRef}
                 className="text-center relative z-10 max-w-5xl w-full transition-transform duration-100 ease-out"
-                style={{ transformStyle: 'preserve-3d' }}
             >
                 <div className="overflow-hidden mb-4">
                     <p className="hero-anim text-cyan font-mono tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-base uppercase">
@@ -165,21 +124,21 @@ export function Hero({ onChatToggle }: HeroProps) {
                         <span
                             ref={scramble1Ref}
                             className="hero-anim inline-block glitch-text"
-                            data-text="DIGITAL"
-                            data-value="DIGITAL"
+                            data-text="TECH"
+                            data-value="TECH"
                             onMouseEnter={() => handleScramble(scramble1Ref, fx1Ref)}
                         >
-                            DIGITAL
+                            TECH
                         </span>
                     </div>
                     <div className="overflow-hidden">
                         <span
                             ref={scramble2Ref}
                             className="hero-anim inline-block text-transparent bg-clip-text bg-gradient-to-r from-neon via-purple-500 to-cyan"
-                            data-value="ENTHUSIAST"
+                            data-value="ARCHITECT"
                             onMouseEnter={() => handleScramble(scramble2Ref, fx2Ref)}
                         >
-                            ENTHUSIAST
+                            ARCHITECT
                         </span>
                     </div>
                 </h1>

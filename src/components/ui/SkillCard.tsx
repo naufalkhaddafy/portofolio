@@ -31,7 +31,7 @@ interface SkillCardProps {
 
 export function SkillCard({ title, icon, iconColor, skills }: SkillCardProps) {
     return (
-        <div className="holo-card p-6 md:p-8 rounded-xl interactive-card" data-tilt>
+        <div className="holo-card p-6 md:p-8 rounded-xl interactive-card h-full flex flex-col" data-tilt>
             <div className="flex items-center justify-between mb-8">
                 <h3 className="text-lg md:text-xl font-bold font-display text-white">{title}</h3>
                 <i className={`${icon} ${iconColor} opacity-50`}></i>
