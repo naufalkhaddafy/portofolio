@@ -29,6 +29,33 @@ const projectsData: Project[] = [
         tab: 'website',
     },
     {
+        images: ['/projects/kajianislamsangatta.png'],
+        category: 'WEBSITE',
+        categoryColor: 'neon',
+        titleKey: 'p8-title',
+        descKey: 'p8-desc',
+        link: 'https://kajianislamsangatta.com/',
+        tab: 'website',
+    },
+    {
+        images: ['/projects/nafbf.png'],
+        category: 'WEBSITE',
+        categoryColor: 'purple',
+        titleKey: 'p9-title',
+        descKey: 'p9-desc',
+        link: 'https://nafbf.codepai.my.id/',
+        tab: 'website',
+    },
+    {
+        images: ['/projects/quran-app.png'],
+        category: 'WEBSITE',
+        categoryColor: 'cyan',
+        titleKey: 'p10-title',
+        descKey: 'p10-desc',
+        link: 'https://quran-app.kajianislamsangatta.com/',
+        tab: 'website',
+    },
+    {
         images: ['https://placehold.co/600x400/111/6366f1?text=SPFx+Web+Parts'],
         category: 'SHAREPOINT',
         categoryColor: 'purple',
@@ -44,6 +71,7 @@ const projectsData: Project[] = [
         descKey: 'p5-desc',
         tab: 'website',
     },
+    
     // Automation Projects
     {
         images: ['https://placehold.co/600x400/111/06b6d4?text=eCopy+Automation'],
