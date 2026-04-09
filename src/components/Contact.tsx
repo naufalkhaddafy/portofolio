@@ -82,16 +82,16 @@ export function Contact() {
 
             <section id="contact" className="py-20 md:py-32 relative px-6">
                 <div className="max-w-4xl mx-auto text-center relative z-10">
-                    <div className="gs-reveal-scale">
-                        <h2 className="text-3xl md:text-5xl lg:text-8xl font-display font-bold mb-6 md:mb-8">
+                    <div className="gs-reveal-scale flex flex-col items-center justify-center w-full mx-auto">
+                        <h2 className="text-3xl md:text-4xl lg:text-6xl font-display font-bold mb-6 md:mb-8 text-center w-full">
                             {getTranslation(currentLang, 'contact-title')}
                         </h2>
-                        <p className="text-base md:text-xl text-gray-400 mb-8 md:mb-12 max-w-2xl mx-auto px-4">
+                        <p className="text-base md:text-xl text-gray-400 mb-8 md:mb-12 max-w-2xl text-center px-4">
                             {getTranslation(currentLang, 'contact-desc')}
                         </p>
                     </div>
 
-                    <div className="gs-reveal-up holo-card p-1 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 inline-block w-full text-left relative overflow-hidden">
+                    <div className="gs-reveal-up holo-card p-1 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 block w-full text-left relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan to-transparent opacity-50 animate-[scan_3s_linear_infinite]"></div>
                         <div className="bg-[#050505] p-6 md:p-8 rounded-xl">
                             <label className="font-mono text-neon text-[10px] md:text-xs mb-2 block tracking-widest">

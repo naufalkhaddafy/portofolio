@@ -63,15 +63,6 @@ const projectsData: Project[] = [
         descKey: 'p2-desc',
         tab: 'website',
     },
-    {
-        images: ['https://placehold.co/600x400/111/a855f7?text=Portfolio+Website'],
-        category: 'ASTRO REACT',
-        categoryColor: 'cyan',
-        titleKey: 'p5-title',
-        descKey: 'p5-desc',
-        tab: 'website',
-    },
-    
     // Automation Projects
     {
         images: ['https://placehold.co/600x400/111/06b6d4?text=eCopy+Automation'],
