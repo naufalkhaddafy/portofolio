@@ -7,6 +7,7 @@ interface ProjectCardProps {
     title: string;
     description: string;
     link?: string;
+    techStack?: string[];
 }
 
 const colorClasses = {
@@ -28,6 +29,7 @@ export function ProjectCard({
     title,
     description,
     link,
+    techStack,
 }: ProjectCardProps) {
     const [currentImage, setCurrentImage] = useState(0);
 
@@ -105,6 +107,19 @@ export function ProjectCard({
                     {title}
                 </h3>
                 <p className="text-gray-400 text-xs md:text-sm">{description}</p>
+
+                {techStack && techStack.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        {techStack.map((tech, i) => (
+                            <span 
+                                key={i} 
+                                className="text-[10px] md:text-[11px] font-mono text-cyan bg-cyan/5 border border-cyan/20 px-2 py-1 rounded"
+                            >
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
+                )}
 
                 {link && (
                     <a

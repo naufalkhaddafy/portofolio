@@ -14,6 +14,7 @@ interface Project {
     titleKey?: string;
     descKey?: string;
     link?: string;
+    techStack?: string[];
     tab: ProjectCategory;
 }
 
@@ -21,11 +22,12 @@ const projectsData: Project[] = [
     // Website Projects
     {
         images: ['/projects/esign-1.png'],
-        category: 'SPFX REACT',
+        category: 'WEB APP',
         categoryColor: 'neon',
         titleKey: 'p4-title',
         descKey: 'p4-desc',
         link: 'https://github.com/naufalkhaddafy',
+        techStack: ['React', 'Power Automate', 'SPFx', 'SharePoint', 'Power BI'],
         tab: 'website',
     },
     {
@@ -35,6 +37,7 @@ const projectsData: Project[] = [
         titleKey: 'p8-title',
         descKey: 'p8-desc',
         link: 'https://kajianislamsangatta.com/',
+        techStack: ['Laravel', 'Inertia.js', 'React', 'Tailwind','Redis','CI/CD','Github Actions'],
         tab: 'website',
     },
     {
@@ -44,6 +47,7 @@ const projectsData: Project[] = [
         titleKey: 'p9-title',
         descKey: 'p9-desc',
         link: 'https://nafbf.codepai.my.id/',
+        techStack: ['Next.js', 'Tailwind', 'Supabase'],
         tab: 'website',
     },
     {
@@ -53,14 +57,36 @@ const projectsData: Project[] = [
         titleKey: 'p10-title',
         descKey: 'p10-desc',
         link: 'https://quran-app.kajianislamsangatta.com/',
+        techStack: ['React', 'Vite', 'Tailwind'],
+        tab: 'website',
+    },
+    {
+        images: ['/projects/memory-game.png'],
+        category: 'WEBSITE',
+        categoryColor: 'neon',
+        titleKey: 'p11-title',
+        descKey: 'p11-desc',
+        link: 'https://memory-game-eosin-eta.vercel.app/',
+        techStack: ['React', 'TypeScript', 'Vite', 'Tailwind'],
+        tab: 'website',
+    },
+    {
+        images: ['/projects/budgetin-app.png'],
+        category: 'WEBSITE',
+        categoryColor: 'cyan',
+        titleKey: 'p12-title',
+        descKey: 'p12-desc',
+        link: 'https://budgetin-app.vercel.app/',
+        techStack: ['Vanilla JS'],
         tab: 'website',
     },
     {
         images: ['https://placehold.co/600x400/111/6366f1?text=SPFx+Web+Parts'],
-        category: 'SHAREPOINT',
+        category: 'WEB APP',
         categoryColor: 'purple',
         titleKey: 'p2-title',
         descKey: 'p2-desc',
+        techStack: ['React', 'TypeScript', 'SPFx'],
         tab: 'website',
     },
     // Automation Projects
@@ -70,30 +96,34 @@ const projectsData: Project[] = [
         categoryColor: 'cyan',
         titleKey: 'p1-title',
         descKey: 'p1-desc',
+        techStack: ['eCopy', 'Automation', 'SharePoint'],
         tab: 'automation',
     },
     {
         images: ['https://placehold.co/600x400/111/a855f7?text=n8n+Workflow'],
-        category: 'N8N',
+        category: 'AUTOMATION',
         categoryColor: 'purple',
         titleKey: 'p6-title',
         descKey: 'p6-desc',
+        techStack: ['n8n', 'Agentic AI', 'LLM'],
         tab: 'automation',
     },
     {
         images: ['https://placehold.co/600x400/111/6366f1?text=Power+Automate'],
-        category: 'POWER AUTOMATE',
+        category: 'AUTOMATION',
         categoryColor: 'neon',
         titleKey: 'p7-title',
         descKey: 'p7-desc',
-        tab: 'automation',
+        techStack: ['Power Automate', 'Microsoft 365'],
+        tab: 'automation',  
     },
     {
         images: ['https://placehold.co/600x400/111/4ade80?text=Home+Lab+Server'],
-        category: 'LINUX HOMELAB',
+        category: 'HOMELAB',
         categoryColor: 'cyan',
         titleKey: 'p3-title',
         descKey: 'p3-desc',
+        techStack: ['Linux', 'Docker'],
         tab: 'automation',
     },
 ];
@@ -166,6 +196,7 @@ export function Projects() {
                                 title={project.titleKey ? getTranslation(currentLang, project.titleKey) : project.title!}
                                 description={project.descKey ? getTranslation(currentLang, project.descKey) : project.description!}
                                 link={project.link}
+                                techStack={project.techStack}
                             />
                         </div>
                     ))}
