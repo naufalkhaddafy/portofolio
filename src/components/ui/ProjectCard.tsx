@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ProjectCardProps {
     images: string[];
@@ -32,6 +33,7 @@ export function ProjectCard({
     techStack,
 }: ProjectCardProps) {
     const [currentImage, setCurrentImage] = useState(0);
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
     const nextImage = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -45,15 +47,32 @@ export function ProjectCard({
 
     return (
         <div className="holo-card group rounded-xl overflow-hidden relative">
-            <div className="h-48 md:h-64 overflow-hidden relative">
+            <div 
+                className="h-48 md:h-64 overflow-hidden relative cursor-pointer"
+                onClick={() => setIsPreviewOpen(true)}
+            >
                 <div
                     className={`absolute inset-0 ${overlayColors[categoryColor]} mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition duration-500`}
                 />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition duration-500 z-10 pointer-events-none" />
                 <img
                     src={images[currentImage]}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
                     alt={`${title} - ${currentImage + 1}`}
                 />
+
+                <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setIsPreviewOpen(true);
+                        }}
+                        className="text-white/80 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-110 pointer-events-auto"
+                        title="Preview Image"
+                    >
+                        <i className="fas fa-expand text-4xl md:text-5xl drop-shadow-xl"></i>
+                    </button>
+                </div>
 
                 {/* Image Navigation - show only if multiple images */}
                 {images.length > 1 && (
@@ -132,6 +151,57 @@ export function ProjectCard({
                     </a>
                 )}
             </div>
+
+            {isPreviewOpen && typeof document !== 'undefined' && createPortal(
+                <div 
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setIsPreviewOpen(false);
+                    }}
+                >
+                    <button 
+                        className="absolute top-6 right-6 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/70 hover:text-white z-50 transition-colors"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setIsPreviewOpen(false);
+                        }}
+                    >
+                        <i className="fas fa-times text-xl"></i>
+                    </button>
+                    <div className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center pointer-events-none">
+                        <img 
+                            src={images[currentImage]} 
+                            alt={`${title} Preview`}
+                            className="max-w-full max-h-[90vh] object-contain rounded-lg pointer-events-auto shadow-2xl ring-1 ring-white/10"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                        {images.length > 1 && (
+                            <>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+                                    }}
+                                    className="absolute left-0 md:left-4 top-1/2 -translate-y-1/2 z-50 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-opacity pointer-events-auto"
+                                >
+                                    <i className="fas fa-chevron-left md:text-xl"></i>
+                                </button>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setCurrentImage((prev) => (prev + 1) % images.length);
+                                    }}
+                                    className="absolute right-0 md:right-4 top-1/2 -translate-y-1/2 z-50 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-opacity pointer-events-auto"
+                                >
+                                    <i className="fas fa-chevron-right md:text-xl"></i>
+                                </button>
+                            </>
+                        )}
+                    </div>
+                </div>,
+                document.body
+            )}
         </div>
     );
 }
