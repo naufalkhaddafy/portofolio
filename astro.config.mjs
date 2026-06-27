@@ -6,5 +6,16 @@ export default defineConfig({
     integrations: [
         react(),
         tailwind()
-    ]
+    ],
+    vite: {
+        server: {
+            proxy: {
+                '/api/9router': {
+                    target: 'https://9router.codepai.my.id',
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/api\/9router/, ''),
+                }
+            }
+        }
+    }
 });

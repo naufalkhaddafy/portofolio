@@ -11,7 +11,7 @@ export async function callGeminiAPI(
         return 'ERROR: API KEY MISSING.';
     }
 
-    const url = `https://9router.codepai.my.id/v1/chat/completions`;
+    const url = `/api/9router/v1/chat/completions`;
 
     const messages = [];
     if (systemInstruction) {

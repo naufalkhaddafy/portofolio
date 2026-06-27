@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/9router/:path*",
+      "destination": "https://9router.codepai.my.id/:path*"
+    }
+  ]
+}
