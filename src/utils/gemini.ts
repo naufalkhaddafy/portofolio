@@ -11,28 +11,38 @@ export async function callGeminiAPI(
         return 'ERROR: API KEY MISSING.';
     }
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${API_KEY}`;
+    const url = `https://9router.codepai.my.id/v1/chat/completions`;
+
+    const messages = [];
+    if (systemInstruction) {
+        messages.push({ role: 'system', content: systemInstruction });
+    }
+    messages.push({ role: 'user', content: prompt });
 
     const payload = {
-        contents: [{ parts: [{ text: prompt }] }],
-        systemInstruction: { parts: [{ text: systemInstruction }] },
+        model: 'kr/claude-sonnet-4.6',
+        messages: messages,
+        stream: false
     };
 
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${API_KEY}`
+            },
             body: JSON.stringify(payload),
         });
         const data = await response.json();
 
         // Check for API errors
         if (data.error) {
-            console.error('Gemini API Error:', data.error);
+            console.error('API Error:', data.error);
             return `API ERROR: ${data.error.message || 'Unknown error'}`;
         }
 
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || 'AI OFFLINE - No response.';
+        return data.choices?.[0]?.message?.content || 'AI OFFLINE - No response.';
     } catch (error) {
         console.error('Connection Error:', error);
         return 'CONNECTION ERROR - Check network.';
