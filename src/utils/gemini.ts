@@ -20,7 +20,7 @@ export async function callGeminiAPI(
     messages.push({ role: 'user', content: prompt });
 
     const payload = {
-        model: 'kr/claude-sonnet-4.6',
+        model: 'homelab',
         messages: messages,
         stream: false
     };
