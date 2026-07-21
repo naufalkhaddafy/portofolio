@@ -18,7 +18,7 @@ const experienceData: ExperienceItem[] = [
         periodKey: 'exp-1-period',
         companyKey: 'exp-1-company',
         descKey: 'exp-1-desc',
-        color: 'neon',
+        color: 'green',
         isActive: true,
     },
     {

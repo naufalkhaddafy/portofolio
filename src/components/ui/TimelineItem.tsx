@@ -5,7 +5,7 @@ interface TimelineItemProps {
     period: string;
     company: string;
     description: string;
-    color?: 'neon' | 'cyan' | 'purple';
+    color?: 'neon' | 'cyan' | 'purple' | 'green';
     isActive?: boolean;
 }
 
@@ -13,18 +13,21 @@ const colorClasses = {
     neon: 'border-neon',
     cyan: 'border-cyan',
     purple: 'border-purple-500',
+    green: 'border-green-500',
 };
 
 const dotColorClasses = {
     neon: 'bg-neon',
     cyan: 'bg-cyan',
     purple: 'bg-purple-500',
+    green: 'bg-green-500',
 };
 
 const textColorClasses = {
     neon: 'text-neon',
     cyan: 'text-cyan',
     purple: 'text-purple-500',
+    green: 'text-green-500',
 };
 
 export function TimelineItem({
@@ -38,15 +41,14 @@ export function TimelineItem({
     return (
         <div className="relative">
             <div
-                className={`absolute -left-[33px] md:-left-[41px] top-0 w-6 h-6 md:w-8 md:h-8 bg-space border-2 ${colorClasses[color]} rounded-full flex items-center justify-center z-10`}
+                className={`absolute -left-5 md:-left-8 top-0 w-6 h-6 md:w-8 md:h-8 bg-space border-2 ${isActive ? colorClasses[color] : 'border-white/20'} rounded-full flex items-center justify-center z-10 transition-colors duration-500`}
             >
                 <div
-                    className={`w-1.5 h-1.5 md:w-2 md:h-2 ${dotColorClasses[color]} rounded-full ${isActive ? 'animate-pulse' : ''
-                        }`}
+                    className={`w-1.5 h-1.5 md:w-2 md:h-2 ${isActive ? dotColorClasses[color] : 'bg-white/20'} rounded-full ${isActive ? 'animate-pulse' : ''}`}
                 />
             </div>
             <div
-                className={`holo-card p-5 md:p-6 rounded-xl hover:${colorClasses[color].replace('border', 'border')}/50 transition duration-300`}
+                className={`holo-card ml-4 md:ml-6 p-5 md:p-6 rounded-xl hover:${colorClasses[color].replace('border', 'border')}/50 transition duration-300`}
             >
                 <div className="flex flex-col md:flex-row justify-between mb-2">
                     <h3 className="text-lg md:text-xl font-bold text-white">{title}</h3>

@@ -42,7 +42,7 @@ export function ChatWidget() {
 
 PROFILE:
 • Name: Muhammad Naufal Khaddafy
-• Role: Software Engineer specializing in AI-assisted development & Enterprise Solutions
+• Role: Software Engineer & System Administrator specializing in AI-assisted development & Enterprise Solutions
 • Education: Bachelor's degree in Informatics, University of Muhammadiyah Malang
 
 CURRENT POSITION:
@@ -113,7 +113,7 @@ COMMUNICATION GUIDELINES:
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             type="text"
-                            placeholder="> Query..."
+                            placeholder="> Prompt..."
                             className="flex-1 bg-transparent border-none text-white focus:ring-0 font-mono text-xs placeholder-gray-600 outline-none"
                         />
                         <button type="submit" className="text-cyan hover:text-white p-2">

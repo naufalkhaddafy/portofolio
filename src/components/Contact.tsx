@@ -18,6 +18,18 @@ export function Contact() {
     const [isGenerating, setIsGenerating] = useState(false);
     const [showResult, setShowResult] = useState(false);
     const [toasts, setToasts] = useState<Toast[]>([]);
+    const [quote, setQuote] = useState({ text: "", author: "" });
+
+    useEffect(() => {
+        const quotes = [
+            { text: "First, solve the problem. Then, write the code.", author: "John Johnson" },
+            { text: "The first rule of any technology used in a business is that automation applied to an efficient operation will magnify the efficiency.", author: "Bill Gates" },
+            { text: "If you define the problem correctly, you almost have the solution.", author: "Steve Jobs" },
+            { text: "A problem well stated is a problem half solved.", author: "Charles Kettering" },
+            { text: "The value of an idea lies in the using of it to solve a real problem.", author: "Thomas Edison" }
+        ];
+        setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+    }, []);
 
     // Show toast notification
     const showToast = (message: string, type: 'success' | 'error' | 'info') => {
@@ -147,6 +159,18 @@ export function Contact() {
                             )}
                         </div>
                     </div>
+
+                    {/* Quote of the Day */}
+                    {quote.text && (
+                        <div className="mt-12 gs-reveal-up text-center px-4 max-w-2xl mx-auto border-t border-white/10 pt-8">
+                            <p className="font-mono text-sm md:text-base text-gray-400 italic">
+                                "{quote.text}"
+                            </p>
+                            <p className="font-mono text-xs text-cyan mt-3 tracking-wider">
+                                — {quote.author}
+                            </p>
+                        </div>
+                    )}
 
                     {/* Social Links */}
                     <div className="mt-16 md:mt-20 flex justify-center gap-8 text-2xl md:text-3xl">

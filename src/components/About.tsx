@@ -42,7 +42,7 @@ export function About() {
         <section id="about" className="py-20 md:py-32 relative px-6">
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                 {/* Image with Scanner */}
-                <div className="relative group gs-reveal-left order-2 md:order-1">
+                <div className="relative group gs-reveal-left order-2 md:order-1" suppressHydrationWarning>
                     <div className="absolute -inset-1 bg-gradient-to-r from-neon to-cyan rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
                     <div className="relative bg-space rounded-lg p-2 border border-white/10 overflow-hidden">
                         <img
@@ -108,7 +108,7 @@ export function About() {
                 </div>
 
                 {/* Content */}
-                <div className="gs-reveal-right order-1 md:order-2">
+                <div className="gs-reveal-right order-1 md:order-2" suppressHydrationWarning>
                     <SectionBadge number="01" label="ABOUT_ME" color="cyan" />
                     <h2 className="text-3xl md:text-6xl font-display font-bold mb-6 md:mb-8 leading-tight">
                         {getTranslation(currentLang, 'about-title').split('<br>').map((line, i) => (
